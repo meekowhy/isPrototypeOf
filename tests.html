@@ -1,0 +1,41 @@
+
+<script src="TinyTestMod.js"></script>
+<script src="IsPrototypeOf.js"></script>
+<script>
+
+	var canine = {
+		bark: function() {
+			console.log('bark');
+		}
+	};
+
+	var dog = Object.create(canine);
+	dog.fetch = function() {
+		console.log('fetch');
+	};
+
+	var myDog = Object.create(dog);
+	var empty = Object.create(null);
+
+
+    tests({
+        
+        'TEST1: it should return true if object passed as first argument is a prototype of second argument': function() {
+        	eq(dog.isPrototypeOf(myDog),isPrototypeOf(dog, myDog));
+        },
+
+        'TEST2: it should return false if object passed as first argument isnt a prototype of second argument': function() {
+        	eq(dog.isPrototypeOf(empty),isPrototypeOf(dog, empty));
+        },
+
+        'TEST3: This should work too': function() {
+        	eq(Object.prototype.isPrototypeOf(myDog),isPrototypeOf(Object.prototype, myDog));
+        },
+
+        'TEST4: It work for any number of prototype links': function() {
+        	eq(isPrototypeOf(canine, myDog),true);
+        },
+	        
+    });
+
+</script>
